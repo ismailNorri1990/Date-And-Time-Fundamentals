@@ -88,6 +88,39 @@ namespace Date_And_Time_Fundamentals
             Console.WriteLine(TokyoTime);
             Console.WriteLine(TokyoTime.Kind);
             Console.WriteLine(dateTimeOffset);
+
+            Console.WriteLine("***********************\n\n");
+            Console.WriteLine("Date And Time Arithmetic");
+            Console.WriteLine("***********************\n\n");
+
+
+            //Working with timeSpan
+
+            Console.WriteLine("***********************\n\n");
+            Console.WriteLine("\tTimeSpan");
+            Console.WriteLine("***********************\n\n");
+
+            var timeSpan = new TimeSpan(60, 72, 100);
+            Console.WriteLine(timeSpan.Days);
+            Console.WriteLine(timeSpan.Hours);
+            Console.WriteLine(timeSpan.Minutes);
+            Console.WriteLine(timeSpan.Seconds);
+
+            Console.WriteLine("***********************\n\n");
+            Console.WriteLine("Difference with Time Span");
+            Console.WriteLine("***********************\n\n");
+
+            var start = DateTimeOffset.UtcNow;
+            var end = start.AddSeconds(45);
+
+            TimeSpan diff = end - start ;
+
+            diff = diff.Subtract(TimeSpan.FromSeconds(10));
+
+            Console.WriteLine(diff);
+
+
+
         }
     }
 }
