@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -50,7 +51,7 @@ namespace Date_And_Time_Fundamentals
             //Formating date and time for serializing it and store in document or database
 
             var dateTimeToParse = "9/10/2019 10:00:00 PM";
-            // 
+            
 
             var ParsedDate = DateTimeOffset.ParseExact(dateTimeToParse, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
             ParsedDate = ParsedDate.ToOffset(TimeSpan.FromHours(10));
@@ -59,7 +60,15 @@ namespace Date_And_Time_Fundamentals
             var formatedDate = ParsedDate.ToString("o");
 
 
+            // Returning Iso 8601
             Console.WriteLine(formatedDate);
+
+            //Working with UTC
+
+            var dateUtc = DateTimeOffset.UtcNow;
+            var LocalTime = dateUtc.ToLocalTime();
+
+            Console.WriteLine("\t"+LocalTime);
              
             
 
