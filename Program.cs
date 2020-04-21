@@ -44,10 +44,25 @@ namespace Date_And_Time_Fundamentals
             
             
             //Using  DateTime.Parse
-            var dateTimeString = "9/10/2019 10:00:00 PM +02:00";
+            var dateTimeString = "9/10/2019 10:00:00 PM +02:00"; 
             var dateTimeParse2 = DateTime.Parse(dateTimeString,CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal );
 
+            //Formating date and time for serializing it and store in document or database
+
+            var dateTimeToParse = "9/10/2019 10:00:00 PM";
+            // 
+
+            var ParsedDate = DateTimeOffset.ParseExact(dateTimeToParse, "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+            ParsedDate = ParsedDate.ToOffset(TimeSpan.FromHours(10));
+
+            // "o" , "s" ,"yyyy-MMM-dd"
+            var formatedDate = ParsedDate.ToString("o");
+
+
+            Console.WriteLine(formatedDate);
+             
             
+
             //Return the date in the specified format
             Console.WriteLine(dateTimeParse1);
             Console.WriteLine(dateTimeParse2);
