@@ -17,11 +17,27 @@ namespace Date_And_Time_Fundamentals
 
             TimeZoneInfo systemTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
             DateTime TokyoTime = TimeZoneInfo.ConvertTime(dateTime, systemTimeZone);
-            
-            //Rendering the dates and times to Console 
+
+            //Using DateTimeOffset (Observing difference with DateTime)
+            DateTimeOffset dateTimeOffset = DateTimeOffset.Now.ToOffset(TimeSpan.FromHours(-1));
+
+            Console.WriteLine("************************");
+
+            foreach (var timeZone in TimeZoneInfo.GetSystemTimeZones())
+            {
+                if (timeZone.GetUtcOffset(dateTimeOffset) == dateTimeOffset.Offset) {
+                    Console.WriteLine(timeZone);
+                }
+            }
+
+            Console.WriteLine("************************");
+
+
+            //Rendering the times to Console 
             Console.WriteLine(dateTime);
             Console.WriteLine(systemTimeZone);
             Console.WriteLine(TokyoTime);
+            Console.WriteLine(dateTimeOffset);
         }
     }
 }
