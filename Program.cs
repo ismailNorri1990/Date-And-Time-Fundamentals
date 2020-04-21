@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Date_And_Time_Fundamentals
 {
     class Program
     {
+        static Calendar calendar = CultureInfo.InvariantCulture.Calendar; 
         static void Main(string[] args)
         {
             //My Current Time in Morocco
@@ -119,8 +121,52 @@ namespace Date_And_Time_Fundamentals
 
             Console.WriteLine(diff);
 
+            Console.WriteLine("***********************\n\n");
+            Console.WriteLine("Calendar - Get week number");
+            Console.WriteLine("***********************\n\n");
+
+            
+            var startOn = new DateTimeOffset(2017,12,31,0,0,0,TimeSpan.Zero);
 
 
+
+            Console.WriteLine(GetIso8601WeekOfYear(startOn.DateTime));
+            
+            //Working with calendar
+            var week = calendar.GetWeekOfYear(startOn.DateTime, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            Console.WriteLine(week);
+
+            Console.WriteLine("***********************\n\n");
+            Console.WriteLine("Renouvelement de contract");
+            Console.WriteLine("***********************\n\n");
+
+            var SubscribingDate = DateTimeOffset.UtcNow;
+            var EndDate = UpdateContract(SubscribingDate, 3);
+
+            Console.WriteLine(EndDate);
+
+        }
+
+        //Last solution before IsoWeek in .Net Core 3.0  --- ISOWeek Class ---
+
+        public static int GetIso8601WeekOfYear(DateTime time)
+        {
+            DayOfWeek dayOfWeek = calendar.GetDayOfWeek(time);
+            if (dayOfWeek >= DayOfWeek.Monday && dayOfWeek <= DayOfWeek.Wednesday)
+            {
+                time = time.AddDays(3);
+            }
+
+            return calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        // Méthode de renouvelement de contrat ajout de mois et traitement des cas année bisextile .
+        public static DateTimeOffset UpdateContract(DateTimeOffset current, int months)
+        {
+            var nextEnd = current.AddMonths(months).AddTicks(-1);
+
+            return new DateTimeOffset(nextEnd.Year, nextEnd.Month, DateTime.DaysInMonth(nextEnd.Year, nextEnd.Month), 23, 59, 59, current.Offset);
         }
     }
 }
