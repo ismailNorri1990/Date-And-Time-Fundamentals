@@ -18,7 +18,7 @@ namespace Date_And_Time_Fundamentals
             TimeZoneInfo systemTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Tokyo Standard Time");
             DateTime TokyoTime = TimeZoneInfo.ConvertTime(dateTime, systemTimeZone);
             
-            //Rendering the times to Console 
+            //Rendering the dates and times to Console 
             Console.WriteLine(dateTime);
             Console.WriteLine(systemTimeZone);
             Console.WriteLine(TokyoTime);
